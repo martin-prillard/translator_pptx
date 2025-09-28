@@ -5,6 +5,8 @@ dependencies = [
   "streamlit",
   "python-pptx",
   "requests",
+  "nbformat",
+  "python-dotenv",
 ]
 
 [tool.hatch.envs.default]
