@@ -1,0 +1,13 @@
+[project]
+name = "translate-ppt-deepl"
+version = "0.1.0"
+dependencies = [
+  "streamlit",
+  "python-pptx",
+  "requests",
+]
+
+[tool.hatch.envs.default]
+dependencies = [
+  "uv",
+]

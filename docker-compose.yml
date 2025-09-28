@@ -1,0 +1,19 @@
+services:
+  app:
+    build:
+      context: .
+    ports:
+      - "8501:8501"
+    environment:
+      - DEEPL_API_KEY=${DEEPL_API_KEY}
+    develop:
+      watch:
+        # Synchroniser uniquement ton code (pas les fichiers de conf Python)
+        - path: ./translate_ppt_deepl_app.py
+          target: /app/translate_ppt_deepl_app.py
+          action: sync
+        # Si tu touches à Dockerfile ou pyproject.toml → rebuild l'image
+        - path: ./Dockerfile
+          action: rebuild
+        - path: ./pyproject.toml
+          action: rebuild
