@@ -128,13 +128,17 @@ def process_powerpoint_file(in_path: Path, tmpdir: Path, tgt_variant: str, inclu
                 yield from iter_text_frames(shp)
             return
 
-        # Table
-        if hasattr(shape, "table") and shape.table is not None:
-            for row in shape.table.rows:
-                for cell in row.cells:
-                    if cell.text_frame is not None:
-                        yield cell.text_frame
-            return
+        # Table - utiliser has_table pour une vérification sûre
+        if hasattr(shape, 'has_table') and shape.has_table:
+            try:
+                for row in shape.table.rows:
+                    for cell in row.cells:
+                        if cell.text_frame is not None:
+                            yield cell.text_frame
+                return
+            except (ValueError, AttributeError):
+                # Ignorer les erreurs pour les tableaux problématiques
+                pass
 
         # Formes avec texte (auto-shapes, placeholders, text boxes)
         if hasattr(shape, "text_frame") and shape.text_frame is not None:
